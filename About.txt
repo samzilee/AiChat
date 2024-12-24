@@ -1,0 +1,21 @@
+React vite!
+1, npm create vite@latest "file name".
+2, npm i/install
+
+tailwind for vite.js
+1, install tailwindcss: "npm install -D tailwindcss postcss autoprefixer"
+2, generate tailwind.config.js: "npx tailwindcss init -p"
+
+3, content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ];
+
+//directive to index.css
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+
+   React-Router-Dom | React Icons
+i; npm i react-router-dom
+ii; npm i react-icons

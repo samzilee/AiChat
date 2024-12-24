@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.response-container {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: rgba(96, 96, 96, 0.393);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.response-container code {
+  font-weight: bolder;
+  background: #f4f4f4;
+  color: #c7254e;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.response-container pre {
+  background: rgba(128, 128, 128, 0.466);
+  color: #f8f8f2;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: "Courier New", Courier, monospace;
+}
