@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 
 const Header = ({ email, userName }) => {
   const [showCommand, setShowCommand] = useState(false);
@@ -29,17 +30,24 @@ const Header = ({ email, userName }) => {
           Commands
         </button>
         <div
-          className={`w-[150%] -left-16 top-10 h-[100px] absolute  bg-gray-800 text-[0.6rem] p-2 rounded-lg z-50 ${
+          className={`w-[150%] -left-16 top-10 h-[100px] absolute  bg-gray-800 text-[0.6rem] p-2 rounded-lg z-50 flex flex-col justify-between ${
             showCommand ? "visible" : "hidden"
           }`}
         >
-          <p>
-            /clear:{" "}
-            <span className="text-blue-400">clear chat from database.</span>
-          </p>
-          <p>
-            /logout: <span className="text-blue-400">logout of Accout.</span>
-          </p>
+          <div>
+            <p>
+              /clear:{" "}
+              <span className="text-blue-400">clear chat from database.</span>
+            </p>
+            <p>
+              /logout: <span className="text-blue-400">logout of Accout.</span>
+            </p>
+          </div>
+          <div className="text-[1.5rem] w-fit">
+            <a href="https://github.com/samzilee/AiChat" target="_blank">
+              <FaGithub className="hover:text-gray-300" />
+            </a>
+          </div>
         </div>
       </section>
     </header>

@@ -130,12 +130,12 @@ const Main = ({ sessionId, userId }) => {
           })}
         </ul>
       </section>
-      <form ref={form} onSubmit={handleChat} className="flex-[1] max-h-[50px]">
-        <div className="p-2 w-full bg-gray-700 flex items-center h-full">
-          <input
+      <form ref={form} onSubmit={handleChat}>
+        <div className=" p-2 w-full bg-gray-700 flex items-center">
+          <textarea
             type="text"
             placeholder="Type Here"
-            className="w-full px-2 outline-none bg-transparent pb-5"
+            className="w-full px-2 outline-none bg-transparent"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
           />
