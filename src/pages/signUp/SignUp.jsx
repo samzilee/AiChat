@@ -16,8 +16,10 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
   const signUpBtn = useRef(null);
+
+  const [progress, setProgress] = useState("");
+  const [progressColor, setProgressColor] = useState("text-green-400");
 
   setTimeout(() => {
     setAnimation("translate-x-0 opacity-1 ");
@@ -28,37 +30,49 @@ const SignUp = () => {
     signUpBtn.current.style.opacity = "0.2";
     signUpBtn.current.style.pointerEvent = "none";
     e.preventDefault();
+    setProgressColor("text-green-400");
     try {
+      setProgress("signing Up");
       const response = await signUpAppWrite(
         crypto.randomUUID(),
         email,
         password,
         userName
       );
+      setProgress("signing Up...Done");
       logIn();
     } catch (error) {
-      setErrorMessage(error.toString());
+      setProgress(error.toString());
+      setProgressColor("text-red-400");
       signUpBtn.current.style.opacity = "";
-      signUpBtn.current.style.pointerEvent = "";
+      signUpBtn.current.style.pointerEvents = "";
     }
   };
   const logIn = async () => {
     try {
       const response = await LogInAppWrite(email, password);
+
+      setProgress("createCollection");
       await createCollection(response.userId, response.providerUid);
       console.log("createCollection...Done");
+      setProgress("creating Collection...Done");
 
+      setProgress("createAttribute");
       await createAttribute(response.userId);
       console.log("createAttribute...Done");
+      setProgress("creating Attribute...Done");
 
+      setProgress("createDocuments");
       await createDocuments(response.userId);
       console.log("createDocuments...Done");
+      setProgress("creating Documents...Done");
 
       setUserData(response);
     } catch (error) {
-      setErrorMessage(error.toString());
+      setProgress(error.toString());
+      setProgressColor("text-red-400");
       signUpBtn.current.style.opacity = "";
-      signUpBtn.current.style.pointerEvent = "";
+      signUpBtn.current.style.pointerEvents = "";
     }
   };
 
@@ -75,9 +89,9 @@ const SignUp = () => {
         className="absolute h-full w-full object-cover z-[-1]"
       />
 
-      <main className="flex items-center justify-center size-full overflow-hidden ">
+      <main className="flex items-center justify-center size-full overflow-hidden">
         <div
-          className={`p-5 flex flex-col gap-2  transition-all duration-[0.5s] w-fit  ${animation}`}
+          className={`p-5 flex flex-col gap-2 transition-all duration-[0.5s] w-fit  ${animation}`}
         >
           <label
             className="flex items-center font-bold text-[1.4rem] gap-2"
@@ -91,7 +105,7 @@ const SignUp = () => {
               <input
                 type="text"
                 placeholder="Create User Name"
-                className="pl-2 outline-none rounded-sm"
+                className="pl-2 outline-none rounded-sm w-[220px]"
                 id="name"
                 required
                 value={userName}
@@ -103,7 +117,7 @@ const SignUp = () => {
               <input
                 type="email"
                 placeholder="Enter Email"
-                className="pl-2 outline-none rounded-sm"
+                className="pl-2 outline-none rounded-sm w-[220px]"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -114,7 +128,7 @@ const SignUp = () => {
               <input
                 type="password"
                 placeholder="Create password"
-                className="pl-2 outline-none rounded-sm"
+                className="pl-2 outline-none rounded-sm w-[220px]"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -135,7 +149,11 @@ const SignUp = () => {
               Log In?
             </Link>
           </footer>
-          <p className="text-[0.5rem] text-red-400 font-bold">{errorMessage}</p>
+          <p
+            className={`text-[0.6rem] text-red-400 font-bold ${progressColor}`}
+          >
+            {progress}
+          </p>
         </div>
       </main>
     </form>

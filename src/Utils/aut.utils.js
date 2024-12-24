@@ -18,7 +18,7 @@ const project = import.meta.env.VITE_AUT_PROJECT;
   return  account.create(id, email, password, name);
 }
 
-const logOut = async(sessionId) => {
+const logOut = async() => {
     console.log("working...logOut");
     
     const client = new Client()
@@ -27,8 +27,8 @@ const logOut = async(sessionId) => {
 
     const account = new Account(client);
 
-    return await account.deleteSessions(
-        sessionId
+    return await account.deleteSession(
+        "current"
     );
 }
 

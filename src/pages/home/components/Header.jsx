@@ -18,7 +18,7 @@ const Header = ({ email, userName }) => {
         <button
           className={`border px-2 py-1 rounded-md font-bold 
           opacity-[0.8] hover:opacity-[1] ${
-            showCommand ? "bg-gray-700" : "bg-transparent"
+            showCommand ? "bg-gray-800" : "bg-transparent"
           }`}
           onClick={() => {
             setShowCommand((current) => {
@@ -30,7 +30,7 @@ const Header = ({ email, userName }) => {
           Commands
         </button>
         <div
-          className={`w-[150%] -left-16 top-10 h-[100px] absolute  bg-gray-800 text-[0.6rem] p-2 rounded-lg z-50 flex flex-col justify-between ${
+          className={` -left-24 top-10 absolute w-fit h-fit bg-gray-800 text-nowrap text-[0.8rem] p-2 rounded-lg z-50 flex flex-col justify-between gap-2 ${
             showCommand ? "visible" : "hidden"
           }`}
         >

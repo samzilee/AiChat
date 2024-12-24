@@ -1,11 +1,11 @@
 import React from "react";
-import homebg from "../../../Assets/abstract-textured-backgound.jpg";
+import homebg from "../../../Assets/mainBg.jpg";
 const Background = () => {
   return (
     <img
       src={homebg}
       alt="backgrond"
-      className=" absolute h-full w-full z-[-1]"
+      className=" absolute h-full w-full z-[-1] object-cover"
     />
   );
 };

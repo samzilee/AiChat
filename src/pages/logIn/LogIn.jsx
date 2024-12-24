@@ -11,6 +11,7 @@ const LogIn = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [userData, setUserData] = useState(null);
   const logInBtn = useRef(null);
+  const [progress, setProgress] = useState(false);
 
   const locaData = localStorage.getItem("AiChatUserData");
 
@@ -25,9 +26,9 @@ const LogIn = () => {
 
   const handleLogIn = async (e) => {
     e.preventDefault();
-
-    logInBtn.current.style.opacity = "0.2";
-    logInBtn.current.style.pointerEvent = "none";
+    logInBtn.current.style.opacity = "0.7";
+    logInBtn.current.style.pointerEvents = "none";
+    setProgress(true);
     try {
       const response = await LogInAppWrite(email, password);
       console.log("LogInAppWrite...Done");
@@ -36,7 +37,8 @@ const LogIn = () => {
       console.log(error);
       setErrorMessage(error.toString());
       logInBtn.current.style.opacity = "";
-      logInBtn.current.style.pointerEvent = "";
+      logInBtn.current.style.pointerEvents = "";
+      setProgress(false);
     }
   };
 
@@ -68,7 +70,7 @@ const LogIn = () => {
               <input
                 type="email"
                 placeholder="Enter Email"
-                className="pl-2 outline-none rounded-sm"
+                className="pl-2 outline-none rounded-sm w-[220px]"
                 id="email"
                 required
                 value={email}
@@ -80,7 +82,7 @@ const LogIn = () => {
               <input
                 type="password"
                 placeholder="Enter Password"
-                className="pl-2 outline-none rounded-sm"
+                className="pl-2 outline-none rounded-sm w-[220px]"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -88,12 +90,17 @@ const LogIn = () => {
             </section>
           </main>
           <footer className="flex gap-5 items-center">
-            <button
-              className=" px-2 bg-blue-400 rounded-md font-semibold opacity-[0.9] hover:opacity-[1]"
-              ref={logInBtn}
-            >
-              Log In
-            </button>
+            {progress ? (
+              <div className="spinner"></div>
+            ) : (
+              <button
+                className=" px-2 bg-blue-400 rounded-md font-semibold opacity-[0.9] hover:opacity-[1] relative text-[1.1rem] "
+                ref={logInBtn}
+              >
+                Log In
+              </button>
+            )}
+
             <Link
               to="/signUp"
               className="text-[0.8rem] text-blue-400 font-bold opacity-[0.5] hover:opacity-[1] cursor-pointer"

@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <main className="relative h-dvh text-white ">
       <Background />
-      <div className="h-full overflow-hidden flex flex-col">
+      <div className="h-full overflow-hidden flex flex-col bg-gray-800 bg-opacity-[0.5]">
         <Header email={email} userName={userName} />
         <Main sessionId={sessionId} userId={userName} />
       </div>

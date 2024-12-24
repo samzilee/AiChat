@@ -20,7 +20,7 @@ const Main = ({ sessionId, userId }) => {
 
   const handlelogOut = async () => {
     try {
-      const result = await logOut(sessionId);
+      const result = await logOut();
       console.log(result);
       localStorage.removeItem("AiChatUserData");
       window.location.href = "/login";
@@ -44,15 +44,20 @@ const Main = ({ sessionId, userId }) => {
     }
     setUserInput("");
     setChats((current) => {
-      return [...current, { sender: "You", message: userInput }];
+      return [...current, { sender: "me", message: userInput }];
     });
     try {
-      const result = await chatAi(userInput);
+      const result = await chatAi(
+        JSON.stringify({
+          previousConversation: chats,
+          latest: userInput,
+        })
+      );
       setChats((current) => {
         return [
           ...current,
           {
-            sender: "Ai",
+            sender: "you",
             message: result.response.text(),
           },
         ];
@@ -61,7 +66,10 @@ const Main = ({ sessionId, userId }) => {
       setChats((current) => {
         return [
           ...current,
-          { sender: "Ai", message: "Oops! Something went wrong 🤖" },
+          {
+            sender: "you",
+            message: "Oops! Something went wrong 🤖. Bad Network Maybe",
+          },
         ];
       });
       console.log(error);
@@ -101,28 +109,33 @@ const Main = ({ sessionId, userId }) => {
   }, [chats]);
 
   return (
-    <main className=" h-full flex  flex-col overflow-auto">
-      <section ref={containerRef} className="px-2 flex-[2]  overflow-auto">
-        <ul className="flex flex-col py-2 md:items-end gap-5">
+    <main className=" h-full flex  flex-col overflow-auto ">
+      <section ref={containerRef} className="px-2 flex-[2] overflow-auto">
+        <ul className="flex flex-col py-2 md:items-end gap-5 ">
           {chats.map((chat, index) => {
             return (
               <li
                 key={index}
-                className={`flex flex-col gap-1  justify-center md:w-[70%] ${
-                  chat.sender === "You"
-                    ? "items-end flex-row-reverse text-end"
+                className={`flex gap-5  justify-center md:w-[70%] ${
+                  chat.sender === "me"
+                    ? "flex-row-reverse text-end "
                     : "items-start"
                 }`}
               >
                 <div
                   className={`${
-                    chat.sender === "You" ? " bg-blue-400" : "bg-green-400"
-                  } h-7 w-7 flex items-center justify-center rounded-full font-bold text-[0.7rem]  `}
+                    chat.sender === "me" ? " bg-blue-400" : "bg-green-400"
+                  } h-7 w-7 flex items-center justify-center rounded-full font-bold text-[0.7rem]
+                  min-h-7 min-w-7  `}
                 >
-                  <p>{chat.sender}</p>
+                  <p>{chat.sender === "me" ? "You" : "Ai"}</p>
                 </div>
 
-                <div className="w-full text-[0.8rem] border-[2px] rounded-[10px] border-gray-400 border-opacity-[0.5]">
+                <div
+                  className={`${
+                    chat.sender === "me" ? "sender" : "receiver"
+                  } w-full text-[0.8rem] border-[2px] rounded-[10px] border-gray-400 border-opacity-[0.5] relative `}
+                >
                   <TextMarkDown response={chat.message} />
                 </div>
               </li>
@@ -131,7 +144,7 @@ const Main = ({ sessionId, userId }) => {
         </ul>
       </section>
       <form ref={form} onSubmit={handleChat}>
-        <div className=" p-2 w-full bg-gray-700 flex items-center">
+        <div className=" p-2 w-full bg-gray-700 flex  ">
           <textarea
             type="text"
             placeholder="Type Here"
@@ -139,7 +152,10 @@ const Main = ({ sessionId, userId }) => {
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
           />
-          <button type="submit" className="bg-green-400 px-2 rounded-md">
+          <button
+            type="submit"
+            className="bg-green-400 px-2  rounded-md h-fit font-semibold"
+          >
             Send
           </button>
         </div>
