@@ -101,8 +101,8 @@ const Main = ({ sessionId, userId }) => {
   }, [chats]);
 
   return (
-    <main className=" h-full flex flex-col">
-      <section ref={containerRef} className="px-2 overflow-y-scroll flex-[1px]">
+    <main className=" h-full flex  flex-col overflow-auto">
+      <section ref={containerRef} className="px-2 flex-[2]  overflow-auto">
         <ul className="flex flex-col py-2 md:items-end gap-5">
           {chats.map((chat, index) => {
             return (
@@ -130,8 +130,8 @@ const Main = ({ sessionId, userId }) => {
           })}
         </ul>
       </section>
-      <form ref={form} onSubmit={handleChat}>
-        <div className="p-2 w-full bg-gray-700 flex items-center">
+      <form ref={form} onSubmit={handleChat} className="flex-[1] max-h-[50px]">
+        <div className="p-2 w-full bg-gray-700 flex items-center h-full">
           <input
             type="text"
             placeholder="Type Here"
